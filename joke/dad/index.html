@@ -1,1 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>TheCursedGroup - Dad Joke</title>
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@Bacon_Space">
+    <meta name="twitter:title" content="TheCursedGroup - Dad Joke">
+    <meta name="twitter:description" content="Made By Open AI And Bacon_Space">
+    <meta name="twitter:image" content="https://i.imgur.com/62s95F1.png">
+    <link rel="icon" type="image/x-icon" href="https://i.imgur.com/62s95F1.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.3/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="#">TheCursedGroup</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="http://thecursedgroup.rf.gd/joke/">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="http://thecursedgroup.rf.gd/joke/pun/">Puns</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="http://thecursedgroup.rf.gd/joke/dad/">Dad</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="http://thecursedgroup.rf.gd/joke/chuck/">Chuck</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <script src="https://kit.fontawesome.com/f762624fc0.js" crossorigin="anonymous"></script>
+    <div><?php echo htmlspecialchars($response); ?> </div>
+    <button type="button" class="btn btn-primary" id="copyButton" data-clipboard-text="<?php echo htmlspecialchars($response); ?>" style="background-color: #a86cc1; border-color: #a86cc1;">
+        <i class="fas fa-clipboard"></i> Copy to Clipboard
+    </button>
+    <button type="button" class="btn btn-primary" style="background-color: #a86cc1;" onclick="location.reload();">
+        <i class="fas fa-sync-alt"></i> Reload
+    </button>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js"></script>
+    <script>
+    var clipboard = new ClipboardJS('#copyButton');
+
+    clipboard.on('success', function(e) {
+        // Show a success alert
+        var alertHtml = '<div class="alert alert-success alert-dismissible fade show" role="alert">';
+        alertHtml += 'Copied to clipboard!';
+        alertHtml += '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>';
+        alertHtml += '</div>';
+        document.body.insertAdjacentHTML('beforeend', alertHtml);
+        setTimeout(function() {
+            document.querySelector('.alert').remove();
+        }, 5000);
+    });
+
+    clipboard.on('error', function(e) {
+        // Show an error alert
+        var alertHtml = '<div class="alert alert-danger alert-dismissible fade show" role="alert">';
+        alertHtml += 'Error copying to clipboard. Please copy manually.';
+        alertHtml += '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>';
+        alertHtml += '</div>';
+        document.body.insertAdjacentHTML('beforeend', alertHtml);
+        setTimeout(function() {
+            document.querySelector('.alert').remove();
+        }, 5000);
+    });
+    </script>
+</body>
+</html>
 
