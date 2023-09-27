@@ -102,7 +102,7 @@
         };
 
         function fetchJoke() {
-            fetch("https://api.chucknorris.io/jokes/random", {
+            fetch("https://icanhazdadjoke.com/", {
                 method: 'GET',
                 headers: {
                     'Accept': 'application/json'
@@ -111,7 +111,7 @@
             .then(response => response.json())
             .then(data => {
                 // Update the joke content
-                document.getElementById('joke-container').textContent = data;
+                document.getElementById('joke-container').textContent = data.joke;
 
                 // Calculate the timestamp using Moment.js
                 var timestamp = moment().subtract(0, 'minutes').fromNow();
