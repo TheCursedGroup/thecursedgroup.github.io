@@ -18,7 +18,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 	<!-- Include Noty CSS -->
 <link rel="stylesheet" href="https://cdn.rawgit.com/needim/noty/77268c46/lib/noty.css">
-<link rel="stylesheet" href="https://poly.x10.mx/k/gtatheme.css">
+<link rel="stylesheet" href="gtatheme.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/noty@3.4.0/lib/themes/metroui.css">
 
 <!-- Include Noty JavaScript -->
@@ -105,6 +105,13 @@
     </style>
 
     <script>
+	        var toastConfig = {
+            title: "TheCursedGroup",
+            iconUrl: "https://i.imgur.com/62s95F1.png",
+            successMessage: "Joke Generator: Joke loaded successfully!",
+            errorMessage: "Joke Generator: Error loading joke. Please try again."
+        };
+
 function showSuccessToast(message) {
     new Noty({
         text: message,
@@ -139,16 +146,16 @@ function fetchJoke() {
             document.getElementById('joke-container').textContent = data.setup + " " + data.delivery;
 
             // Show the success notification using Noty
-            showSuccessToast("Joke loaded successfully!");
+            showSuccessToast(`${toastConfig.title} ${toastConfig.successMessage}`);
 
             // Enable the copy button
             document.getElementById('copyButton').disabled = false;
         } else {
             // Display the "undefined" error message
-            document.getElementById('joke-container').textContent = "undefined undefined";
+            document.getElementById('joke-container').textContent = "Pun Not Found Please Refresh";
 
             // Show the error notification using Noty
-            showErrorToast("Error loading joke. Please try again.");
+            showErrorToast(`${toastConfig.title} ${toastConfig.errorMessage}`);
 
             // Enable the reload button
             document.getElementById('reloadButton').disabled = false;
