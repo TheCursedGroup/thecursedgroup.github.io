@@ -163,7 +163,7 @@ function fetchJoke() {
     })
     .catch(error => {
         // Show the error notification using Noty
-        showErrorToast("Error loading joke. Please try again.");
+        showErrorToast(`${toastConfig.title} ${toastConfig.errorMessage}`);
 
         // Enable the reload button
         document.getElementById('reloadButton').disabled = false;
