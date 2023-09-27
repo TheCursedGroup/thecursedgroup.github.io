@@ -3,10 +3,10 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>TheCursedGroup - Puns</title>
+    <title>TheCursedGroup - Dad Joke</title>
     <meta name="twitter:card" content="summary">
     <meta name="twitter:site" content="@Bacon_Space">
-    <meta name="twitter:title" content="TheCursedGroup - Puns">
+    <meta name="twitter:title" content="TheCursedGroup - Dad Joke">
     <meta name="twitter:description" content="Made By Open AI And Bacon_Space">
     <meta name="twitter:image" content="https://i.imgur.com/62s95F1.png">
     <link rel="icon" type="image/x-icon" href="https://i.imgur.com/62s95F1.png">
@@ -55,7 +55,7 @@
     <div class="toast" role="alert" aria-live="assertive" aria-atomic="true" id="successToast" style="position: absolute; top: 0; right: 0;">
         <div class="toast-header">
             <img src="https://i.imgur.com/62s95F1.png" class="rounded me-2 toast-icon" alt="TheCursedGroup">
-            <strong class="me-auto"id="title">TheCursedGroup</strong>
+            <strong class="me-auto" id="title">TheCursedGroup</strong>
             <small class="text-body-secondary" id="toastTimestamp"></small>
             <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
         </div>
@@ -84,67 +84,64 @@
         }
     </style>
 
-   <script>
-<script>
-    var toastConfig = {
-        title: "TheCursedGroup",
-        iconUrl: "https://i.imgur.com/62s95F1.png",
-        successMessage: "Joke Reloaded successfully!",
-        errorMessage: "Error loading joke. Please try again."
-    };
+    <script>
+        var toastConfig = {
+            title: "TheCursedGroup",
+            iconUrl: "https://i.imgur.com/62s95F1.png",
+            successMessage: "Joke Reloaded successfully!",
+            errorMessage: "Error loading joke. Please try again."
+        };
 
-    function fetchJoke() {
-        fetch("https://official-joke-api.appspot.com/random_joke", {
-            method: 'GET',
-            headers: {
-                'Accept': 'text/plain'
-            }
-        })
-        .then(response => response.text())
-        .then(data => {
-            // Update the joke content
-            document.getElementById('joke-container').textContent = data.setup + " " + data.punchline;
+        function fetchJoke() {
+            fetch("https://official-joke-api.appspot.com/random_joke", {
+                method: 'GET',
+                headers: {
+                    'Accept': 'application/json'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Update the joke content
+                document.getElementById('joke-container').textContent = data.setup + " " + data.punchline;
 
-            // Calculate the timestamp using Moment.js
-            var timestamp = moment().subtract(0, 'minutes').fromNow();
+                // Calculate the timestamp using Moment.js
+                var timestamp = moment().subtract(0, 'minutes').fromNow();
 
-            // Update the toast title and timestamp using toastConfig
-            document.getElementById('title').textContent = toastConfig.title;
-            document.getElementById('toastTimestamp').textContent = timestamp;
+                // Update the toast timestamp
+                document.getElementById('toastTimestamp').textContent = timestamp;
 
-            // Show the success toast notification
-            var successToast = new bootstrap.Toast(document.getElementById('successToast'));
-            successToast.show();
+                // Show the success toast notification
+                var successToast = new bootstrap.Toast(document.getElementById('successToast'));
+                successToast.show();
 
-            // Copy the joke to the clipboard
-            copyToClipboard(data.setup + " " + data.punchline);
-        })
-        .catch(error => {
-            // Calculate the error timestamp using Moment.js
-            var errorTimestamp = moment().subtract(11, 'minutes').fromNow();
+                // Copy the joke to the clipboard
+                copyToClipboard(data.setup + " " + data.punchline);
+            })
+            .catch(error => {
+                // Calculate the error timestamp using Moment.js
+                var errorTimestamp = moment().subtract(11, 'minutes').fromNow();
 
-            // Update the toast title and timestamp using toastConfig
-            document.getElementById('title').textContent = toastConfig.title;
-            document.getElementById('errorToastTimestamp').textContent = errorTimestamp;
+                // Update the toast timestamp
+                document.getElementById('errorToastTimestamp').textContent = errorTimestamp;
 
-            // Show the error toast notification
-            var errorToast = new bootstrap.Toast(document.getElementById('errorToast'));
-            errorToast.show();
-        });
-    }
+                // Show the error toast notification
+                var errorToast = new bootstrap.Toast(document.getElementById('errorToast'));
+                errorToast.show();
+            });
+        }
 
-    function copyToClipboard(text) {
-        var textArea = document.createElement("textarea");
-        textArea.value = text;
-        document.body.appendChild(textArea);
-        textArea.select();
-        document.execCommand('copy');
-        document.body.removeChild(textArea);
-    }
+        function copyToClipboard(text) {
+            var textArea = document.createElement("textarea");
+            textArea.value = text;
+            document.body.appendChild(textArea);
+            textArea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textArea);
+        }
 
-    // Initial fetch when the page loads
-    fetchJoke();
-</script>
+        // Initial fetch when the page loads
+        fetchJoke();
+    </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js"></script>
     <script src="https://kit.fontawesome.com/f762624fc0.js" crossorigin="anonymous"></script>
