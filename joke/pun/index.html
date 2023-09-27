@@ -3,19 +3,19 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>TheCursedGroup - Dad Joke</title>
-    <meta name="twitter:card" content="summary">
-    <meta name="twitter:site" content="@Bacon_Space">
-    <meta name="twitter:title" content="TheCursedGroup - Dad Joke">
-    <meta name="twitter:description" content="Made By Open AI And Bacon_Space">
-    <meta name="twitter:image" content="https://i.imgur.com/62s95F1.png">
+    <title>TheCursedGroup - Chuck Norris</title>
+    <meta name="description" content="Enjoy a random chuck norris from TheCursedGroup.">
+    <meta name="author" content="TheCursedGroup">
     <link rel="icon" type="image/x-icon" href="https://i.imgur.com/62s95F1.png">
 
     <!-- Include Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css">
 
-    <!-- Include Font Awesome (if needed) -->
+    <!-- Include Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
+
+    <!-- Include Moment.js for timestamp -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -43,14 +43,23 @@
         </div>
     </nav>
 
-    <div id="joke-container"></div>
-
-    <button type="button" class="btn btn-primary" id="copyButton" style="background-color: #a86cc1; border-color: #a86cc1;">
-        <i class="fas fa-clipboard"></i> Copy to Clipboard
-    </button>
-    <button type="button" class="btn btn-primary" style="background-color: #a86cc1;" onclick="fetchJoke();">
-        <i class="fas fa-sync-alt"></i> Reload
-    </button>
+    <div class="container mt-5">
+        <div class="row mt-3">
+            <div class="col-12 text-center">
+                <div id="joke-container"></div>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-12 text-center">
+                <button type="button" class="btn btn-primary" id="copyButton">
+                    <i class="fas fa-clipboard"></i> Copy Joke
+                </button>
+                <button type="button" class="btn btn-primary" id="reloadButton">
+                    <i class="fas fa-sync-alt"></i> Get New Joke
+                </button>
+            </div>
+        </div>
+    </div>
 
     <div class="toast" role="alert" aria-live="assertive" aria-atomic="true" id="successToast" style="position: absolute; top: 0; right: 0;">
         <div class="toast-header">
@@ -67,11 +76,11 @@
     <div class="toast" role="alert" aria-live="assertive" aria-atomic="true" id="errorToast" style="position: absolute; top: 0; right: 0;">
         <div class="toast-header">
             <img src="https://i.imgur.com/62s95F1.png" class="rounded me-2 toast-icon" alt="TheCursedGroup">
-            <strong class="me-auto" id="title"></strong>
+            <strong class="me-auto" id="errorTitle"></strong>
             <small class="text-body-secondary" id="errorToastTimestamp"></small>
             <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
         </div>
-        <div class="toast-body">
+        <div class="toast-body" id="errorMessage">
             Error loading joke. Please try again.
         </div>
     </div>
@@ -88,7 +97,7 @@
         var toastConfig = {
             title: "TheCursedGroup",
             iconUrl: "https://i.imgur.com/62s95F1.png",
-            successMessage: "Joke Reloaded successfully!",
+            successMessage: "Joke loaded successfully!",
             errorMessage: "Error loading joke. Please try again."
         };
 
@@ -102,10 +111,10 @@
             .then(response => response.json())
             .then(data => {
                 // Update the joke content
-                document.getElementById('joke-container').textContent = data.setup + " " + data.punchline;
+                document.getElementById('joke-container').textContent = data.value;
 
                 // Calculate the timestamp using Moment.js
-                var timestamp = moment().subtract(0, 'minutes').fromNow();
+                var timestamp = moment().subtract(data.updated_at, 'minutes').fromNow();
 
                 // Update the toast timestamp
                 document.getElementById('toastTimestamp').textContent = timestamp;
@@ -114,12 +123,12 @@
                 var successToast = new bootstrap.Toast(document.getElementById('successToast'));
                 successToast.show();
 
-                // Copy the joke to the clipboard
-                copyToClipboard(data.setup + " " + data.punchline);
+                // Enable the copy button
+                document.getElementById('copyButton').disabled = false;
             })
             .catch(error => {
                 // Calculate the error timestamp using Moment.js
-                var errorTimestamp = moment().subtract(11, 'minutes').fromNow();
+                var errorTimestamp = moment().subtract(0, 'minutes').fromNow();
 
                 // Update the toast timestamp
                 document.getElementById('errorToastTimestamp').textContent = errorTimestamp;
@@ -127,12 +136,16 @@
                 // Show the error toast notification
                 var errorToast = new bootstrap.Toast(document.getElementById('errorToast'));
                 errorToast.show();
+
+                // Enable the reload button
+                document.getElementById('reloadButton').disabled = false;
             });
         }
 
-        function copyToClipboard(text) {
+        function copyJokeToClipboard() {
+            var jokeText = document.getElementById('joke-container').textContent;
             var textArea = document.createElement("textarea");
-            textArea.value = text;
+            textArea.value = jokeText;
             document.body.appendChild(textArea);
             textArea.select();
             document.execCommand('copy');
@@ -141,9 +154,13 @@
 
         // Initial fetch when the page loads
         fetchJoke();
+
+        // Event listener for copy button
+        document.getElementById('copyButton').addEventListener('click', copyJokeToClipboard);
+
+        // Event listener for reload button
+        document.getElementById('reloadButton').addEventListener('click', fetchJoke);
     </script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js"></script>
-    <script src="https://kit.fontawesome.com/f762624fc0.js" crossorigin="anonymous"></script>
 </body>
 </html>
