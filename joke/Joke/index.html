@@ -16,6 +16,14 @@
 
     <!-- Include Moment.js for timestamp -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+	<!-- Include Noty CSS -->
+<link rel="stylesheet" href="https://cdn.rawgit.com/needim/noty/77268c46/lib/noty.css">
+<link rel="stylesheet" href="gtatheme.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/noty@3.4.0/lib/themes/metroui.css">
+
+<!-- Include Noty JavaScript -->
+<script src="https://cdn.jsdelivr.net/gh/needim/noty@77268c46/lib/noty.min.js"></script>
+
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -97,53 +105,63 @@
     </style>
 
     <script>
-        var toastConfig = {
-            title: "TheCursedGroup",
-            iconUrl: "https://i.imgur.com/62s95F1.png",
-            successMessage: "Joke loaded successfully!",
-            errorMessage: "Error loading joke. Please try again."
-        };
+function showSuccessToast(message) {
+    new Noty({
+        text: message,
+        type: 'success',
+        theme: 'gta',
+        timeout: 3000, // Auto-close after 3 seconds
+    }).show();
+}
 
-        function fetchJoke() {
-            fetch("https://v2.jokeapi.dev/joke/Any?blacklistFlags=nsfw,religious,political,racist,sexist,explicit", {
-                method: 'GET',
-                headers: {
-                    'Accept': 'application/json'
-                }
-            })
-            .then(response => response.json())
-            .then(data => {
-                // Update the joke content
-                document.getElementById('joke-container').textContent = data.setup + " " + data.delivery;
+function showErrorToast(message) {
+    new Noty({
+        text: message,
+        type: 'error',
+        theme: 'gta',
+        timeout: 3000, // Auto-close after 3 seconds
+    }).show();
+}
 
-                // Calculate the timestamp using Moment.js
-                var timestamp = moment().subtract(0, 'minutes').fromNow();
+// Inside your fetchJoke function, update the success and error notifications like this:
 
-                // Update the toast timestamp
-                document.getElementById('toastTimestamp').textContent = timestamp;
-
-                // Show the success toast notification
-                var successToast = new bootstrap.Toast(document.getElementById('successToast'));
-                successToast.show();
-
-                // Enable the copy button
-                document.getElementById('copyButton').disabled = false;
-            })
-            .catch(error => {
-                // Calculate the error timestamp using Moment.js
-                var errorTimestamp = moment().subtract(0, 'minutes').fromNow();
-
-                // Update the toast timestamp
-                document.getElementById('errorToastTimestamp').textContent = errorTimestamp;
-
-                // Show the error toast notification
-                var errorToast = new bootstrap.Toast(document.getElementById('errorToast'));
-                errorToast.show();
-
-                // Enable the reload button
-                document.getElementById('reloadButton').disabled = false;
-            });
+function fetchJoke() {
+    fetch("https://v2.jokeapi.dev/joke/Any?blacklistFlags=nsfw,religious,political,racist,sexist,explicit", {
+        method: 'GET',
+        headers: {
+            'Accept': 'application/json'
         }
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.setup && data.delivery) {
+            // Update the joke content
+            document.getElementById('joke-container').textContent = data.setup + " " + data.delivery;
+
+            // Show the success notification using Noty
+            showSuccessToast("Joke loaded successfully!");
+
+            // Enable the copy button
+            document.getElementById('copyButton').disabled = false;
+        } else {
+            // Display the "undefined" error message
+            document.getElementById('joke-container').textContent = "undefined undefined";
+
+            // Show the error notification using Noty
+            showErrorToast("Error loading joke. Please try again.");
+
+            // Enable the reload button
+            document.getElementById('reloadButton').disabled = false;
+        }
+    })
+    .catch(error => {
+        // Show the error notification using Noty
+        showErrorToast("Error loading joke. Please try again.");
+
+        // Enable the reload button
+        document.getElementById('reloadButton').disabled = false;
+    });
+}
 
         function copyJokeToClipboard() {
             var jokeText = document.getElementById('joke-container').textContent;
