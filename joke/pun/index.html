@@ -111,10 +111,10 @@
             .then(response => response.json())
             .then(data => {
                 // Update the joke content
-                document.getElementById('joke-container').textContent = data.value;
+                document.getElementById('joke-container').textContent = data.setup + " " + data.punchline;
 
                 // Calculate the timestamp using Moment.js
-                var timestamp = moment().subtract(data.updated_at, 'minutes').fromNow();
+                var timestamp = moment().subtract(0, 'minutes').fromNow();
 
                 // Update the toast timestamp
                 document.getElementById('toastTimestamp').textContent = timestamp;
