@@ -152,7 +152,7 @@ function fetchJoke() {
             document.getElementById('copyButton').disabled = false;
         } else {
             // Display the "undefined" error message
-            document.getElementById('joke-container').textContent = "Pun Not Found Please Refresh";
+            document.getElementById('joke-container').textContent = "Joke Not Found Please Refresh";
 
             // Show the error notification using Noty
             showErrorToast(`${toastConfig.title} ${toastConfig.errorMessage}`);
