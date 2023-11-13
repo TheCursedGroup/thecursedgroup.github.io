@@ -4,9 +4,10 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>TheCursedGroup - Chuck Norris</title>
-    <meta name="description" content="Enjoy a random chuck norris from TheCursedGroup.">
+    <meta name="description" content="Enjoy a random Chuck Norris joke from TheCursedGroup.">
     <meta name="author" content="TheCursedGroup">
     <link rel="icon" type="image/x-icon" href="https://i.imgur.com/62s95F1.png">
+
     <!-- Include Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css">
 
@@ -15,17 +16,14 @@
 
     <!-- Include Moment.js for timestamp -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
-	<!-- Include Noty CSS -->
-<link rel="stylesheet" href="https://cdn.rawgit.com/needim/noty/77268c46/lib/noty.css">
-<link rel="stylesheet" href="https://thecursedgroup.github.io/css/gtatheme.css">
 
-
-<!-- Include Noty JavaScript -->
-<script src="https://cdn.jsdelivr.net/gh/needim/noty@77268c46/lib/noty.min.js"></script>
-	
     <!-- Include Simple Notify JavaScript and CSS -->
-    <script src="https://cdn.jsdelivr.net/npm/simple-notify@0.5.5/dist/simple-notify.min.js"></script>
+    <script src="https://thecursedgroup.github.io/joke/dad/noty.js"></script>
     <link href="https://thecursedgroup.github.io/joke/dad/noty.css" rel="stylesheet">
+		<!-- Include Noty CSS -->
+<link rel="stylesheet" href="https://cdn.rawgit.com/needim/noty/77268c46/lib/noty.css">
+<link rel="stylesheet" href="gtatheme.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/noty@3.4.0/lib/themes/metroui.css">
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -37,7 +35,7 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="https://thecursedgroup.github.io/joke/">Home</a>
+                        <a class="nav-link" href="https://thecursedgroup.github.io/joke/">Home</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="https://thecursedgroup.github.io/joke/pun/">Puns</a>
@@ -46,7 +44,7 @@
                         <a class="nav-link" href="https://thecursedgroup.github.io/joke/dad/">Dad</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="https://thecursedgroup.github.io/joke/chuck/">Chuck</a>
+                        <a class="nav-link active" aria-current="page" href="https://thecursedgroup.github.io/joke/chuck/">Chuck</a>
                     </li>
 					  <li class="nav-item">
                         <a class="nav-link" href="https://thecursedgroup.github.io/joke/Joke/">Joke</a>
@@ -74,30 +72,6 @@
         </div>
     </div>
 
-    <div class="toast" role="alert" aria-live="assertive" aria-atomic="true" id="successToast" style="position: absolute; top: 0; right: 0;">
-        <div class="toast-header">
-            <img src="https://i.imgur.com/62s95F1.png" class="rounded me-2 toast-icon" alt="TheCursedGroup">
-            <strong class="me-auto" id="title">TheCursedGroup</strong>
-            <small class="text-body-secondary" id="toastTimestamp"></small>
-            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-        </div>
-        <div class="toast-body" id="successMessage">
-            Joke loaded successfully!
-        </div>
-    </div>
-
-    <div class="toast" role="alert" aria-live="assertive" aria-atomic="true" id="errorToast" style="position: absolute; top: 0; right: 0;">
-        <div class="toast-header">
-            <img src="https://i.imgur.com/62s95F1.png" class="rounded me-2 toast-icon" alt="TheCursedGroup">
-            <strong class="me-auto" id="errorTitle"></strong>
-            <small class="text-body-secondary" id="errorToastTimestamp"></small>
-            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-        </div>
-        <div class="toast-body" id="errorMessage">
-            Error loading joke. Please try again.
-        </div>
-    </div>
-
     <style>
         /* Custom CSS to adjust the icon size in the toast */
         .toast-icon {
@@ -106,52 +80,20 @@
         }
     </style>
 
-  <script>
-	        var toastConfig = {
-            title: "TheCursedGroup",
-            iconUrl: "https://i.imgur.com/62s95F1.png",
-            successMessage: "Joke Generator: Chuck Norris loaded successfully!",
-            errorMessage: "Joke Generator: Error loading Chuck Norris. Please try again."
-        };
+    <script>
 
-
-      function showSuccessToast(message) {
+        function showSuccessToast(message) {
             new Notify({
                 status: 'success',
                 title: 'TheCursedGroup - Chuck Norris',
-                text: successMessage,
+                text: message,
                 autoclose: true,
-		showCloseButton: false,
-		showIcon: false,
+				showCloseButton: false,
+				showIcon: false,
                 autotimeout: 3000
             }).show();
         }
-
-
-// Inside your fetchJoke function, update the success and error notifications like this:
-
-function fetchJoke() {
-    fetch("https://api.chucknorris.io/jokes/random")
-        .then(response => {
-            if (!response.ok) {
-                throw new Error("Network response was not ok");
-            }
-            return response.json();
-        })
-        .then(data => {
-            if (data.value) {
-                // Update the joke content
-                const jokeText = data.value;
-                document.getElementById('joke-container').textContent = jokeText;
-
-                // Show the success notification using Noty
-                showSuccessToast(`${toastConfig.title} ${toastConfig.successMessage}`);
-            } else {
-                // Display an error message
-                document.getElementById('joke-container').textContent = "Error: Invalid joke data";
-
-                // Show the error notification using Noty
-                        function showErrorNotification(message) {
+         function showErrorToast(message) {
     new Noty({
         text: message,
         type: 'error',
@@ -159,17 +101,46 @@ function fetchJoke() {
         timeout: 3000, // Auto-close after 3 seconds
     }).show();
 }
-            }
-        })
-        .catch(error => {
-            // Display an error message
-            document.getElementById('joke-container').textContent = "Error loading joke. Please try again.";
 
-            // Show the error notification using Noty
-            showErrorToast(`${toastConfig.title} ${toastConfig.errorMessage}`);
-        });
-}
+        var toastConfig = {
+            title: "TheCursedGroup - Chuck Norris",
+            iconUrl: "https://i.imgur.com/62s95F1.png",
+            successMessage: "Joke loaded successfully!",
+            errorMessage: "Error loading joke. Please try again."
+        };
 
+        function fetchJoke() {
+            fetch("https://api.chucknorris.io/jokes/random", {
+                method: 'GET',
+                headers: {
+                    'Accept': 'application/json'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Update the joke content
+                document.getElementById('joke-container').textContent = data.value;
+
+                // Calculate the timestamp using Moment.js
+                var timestamp = moment().subtract(data.updated_at, 'minutes').fromNow();
+
+                // Show the success toast notification
+                showSuccessToast("Joke loaded successfully");
+
+                // Enable the copy button
+                document.getElementById('copyButton').disabled = false;
+            })
+            .catch(error => {
+                // Calculate the error timestamp using Moment.js
+                var errorTimestamp = moment().subtract(0, 'minutes').fromNow();
+
+                // Show the error toast notification
+                showErrorToast("Error loading joke. Please try again");
+
+                // Enable the reload button
+                document.getElementById('reloadButton').disabled = false;
+            });
+        }
 
         function copyJokeToClipboard() {
             var jokeText = document.getElementById('joke-container').textContent;
