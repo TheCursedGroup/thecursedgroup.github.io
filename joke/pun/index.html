@@ -108,26 +108,47 @@
     </style>
 
     <script>
-	        var toastConfig = {
+		        var toastConfig = {
             title: "TheCursedGroup",
             iconUrl: "https://i.imgur.com/62s95F1.png",
             successMessage: "Joke Generator: Pun loaded successfully!",
             errorMessage: "Joke Generator: Error loading Pun. Please try again."
         };
-
-
-      function showSuccessToast(message) {
+        function showSuccessNotification(message) {
             new Notify({
                 status: 'success',
-                title: 'TheCursedGroup - Pun',
-                text: successMessage,
+                title: "TheCursedGroup - Pun",
+                text: "Joke Generator: Pun loaded successfully!",
                 autoclose: true,
-		showCloseButton: false,
-		showIcon: false,
+				showCloseButton: false,
+				showIcon: false,
                 autotimeout: 3000
             }).show();
         }
-function showErrorToast(message) {
+
+
+        function fetchJoke() {
+            fetch("https://official-joke-api.appspot.com/random_joke", {
+                method: 'GET',
+                headers: {
+                    'Accept': 'application/json'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Update the joke content
+                document.getElementById('joke-container').textContent = data.setup+""+data.punchline;
+
+                // Show the success notification
+                showSuccessNotification("Joke loaded successfully");
+
+                // Enable the copy button
+                document.getElementById('copyButton').disabled = false;
+            })
+            .catch(error => {
+                // Show the error notification
+                
+        function showErrorNotification(message) {
     new Noty({
         text: message,
         type: 'error',
@@ -136,45 +157,11 @@ function showErrorToast(message) {
     }).show();
 }
 
-// Inside your fetchJoke function, update the success and error notifications like this:
 
-function fetchJoke() {
-    fetch("https://official-joke-api.appspot.com/random_joke", {
-        method: 'GET',
-        headers: {
-            'Accept': 'application/json'
+                // Enable the reload button
+                document.getElementById('reloadButton').disabled = false;
+            });
         }
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.setup && data.delivery) {
-            // Update the joke content
-            document.getElementById('joke-container').textContent = data.setup + " " + data.punchline;
-
-            // Show the success notification using Noty
-            showSuccessToast(`${toastConfig.title} ${toastConfig.successMessage}`);
-
-            // Enable the copy button
-            document.getElementById('copyButton').disabled = false;
-        } else {
-            // Display the "undefined" error message
-            document.getElementById('joke-container').textContent = "undefined undefined";
-
-            // Show the error notification using Noty
-            showErrorToast(`${toastConfig.title} ${toastConfig.errorMessage}`);
-
-            // Enable the reload button
-            document.getElementById('reloadButton').disabled = false;
-        }
-    })
-    .catch(error => {
-        // Show the error notification using Noty
-        showErrorToast("Error loading joke. Please try again.");
-
-        // Enable the reload button
-        document.getElementById('reloadButton').disabled = false;
-    });
-}
 
         function copyJokeToClipboard() {
             var jokeText = document.getElementById('joke-container').textContent;
