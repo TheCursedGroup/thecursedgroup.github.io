@@ -107,33 +107,25 @@
     </style>
 
     <script>
-	        var toastConfig = {
-            title: "TheCursedGroup",
-            iconUrl: "https://i.imgur.com/62s95F1.png",
-            successMessage: "Joke Generator: Joke loaded successfully!",
-            errorMessage: "Joke Generator: Error loading joke. Please try again."
-        };
+var toastConfig = {
+    title: "TheCursedGroup",
+    iconUrl: "https://i.imgur.com/62s95F1.png",
+    successMessage: "Joke Generator: Joke loaded successfully!",
+    errorMessage: "Joke Generator: Error loading joke. Please try again."
+};
 
-      function showSuccessToast(message) {
-            new Notify({
-                status: 'success',
-                title: 'TheCursedGroup - Joke',
-                text: "Joke Generator: Joke loaded successfully!",
-                autoclose: true,
-		showCloseButton: false,
-		showIcon: false,
-                autotimeout: 3000
-            }).show();
-        }
-
-function showErrorToast(message) {
-    new Noty({
+function showSuccessToast(message) {
+    new Notify({
+        status: 'success',
+        title: 'TheCursedGroup - Joke',
         text: message,
-        type: 'error',
-        theme: 'gta',
-        timeout: 3000, // Auto-close after 3 seconds
+        autoclose: true,
+        showCloseButton: false,
+        showIcon: false,
+        autotimeout: 3000
     }).show();
 }
+
 
 // Inside your fetchJoke function, update the success and error notifications like this:
 
@@ -155,11 +147,17 @@ function fetchJoke() {
 
             // Enable the copy button
             document.getElementById('copyButton').disabled = false;
-        } else {
-            // Display the "undefined" error message
-            document.getElementById('joke-container').textContent = "Joke Not Found Please Refresh";
+        } else if (data.joke) {
+            // Display the joke if 'setup' and 'delivery' are not available
+            document.getElementById('joke-container').textContent = data.joke;
 
-            // Show the error notification using Noty
+            // Show the success notification using Noty
+            showSuccessToast(`${toastConfig.title} ${toastConfig.successMessage}`);
+
+            // Enable the copy button
+            document.getElementById('copyButton').disabled = false;
+        } else {
+            // Handle the case where the response doesn't contain a joke
             showErrorToast(`${toastConfig.title} ${toastConfig.errorMessage}`);
 
             // Enable the reload button
@@ -168,31 +166,40 @@ function fetchJoke() {
     })
     .catch(error => {
         // Show the error notification using Noty
-        showErrorToast(`${toastConfig.title} ${toastConfig.errorMessage}`);
+        
+function showErrorToast(message) {
+    new Notify({
+        text: message,
+        type: 'success',
+        theme: 'gta',
+        timeout: 3000, // Auto-close after 3 seconds
+    }).show();
+}
 
         // Enable the reload button
         document.getElementById('reloadButton').disabled = false;
     });
 }
 
-        function copyJokeToClipboard() {
-            var jokeText = document.getElementById('joke-container').textContent;
-            var textArea = document.createElement("textarea");
-            textArea.value = jokeText;
-            document.body.appendChild(textArea);
-            textArea.select();
-            document.execCommand('copy');
-            document.body.removeChild(textArea);
-        }
+function copyJokeToClipboard() {
+    var jokeText = document.getElementById('joke-container').textContent;
+    var textArea = document.createElement("textarea");
+    textArea.value = jokeText;
+    document.body.appendChild(textArea);
+    textArea.select();
+    document.execCommand('copy');
+    document.body.removeChild(textArea);
+}
 
-        // Initial fetch when the page loads
-        fetchJoke();
+// Initial fetch when the page loads
+fetchJoke();
 
-        // Event listener for copy button
-        document.getElementById('copyButton').addEventListener('click', copyJokeToClipboard);
+// Event listener for copy button
+document.getElementById('copyButton').addEventListener('click', copyJokeToClipboard);
 
-        // Event listener for reload button
-        document.getElementById('reloadButton').addEventListener('click', fetchJoke);
+// Event listener for reload button
+document.getElementById('reloadButton').addEventListener('click', fetchJoke);
+
     </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js"></script>
 </body>
