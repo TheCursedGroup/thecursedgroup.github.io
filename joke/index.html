@@ -12,6 +12,9 @@
     <link rel="icon" type="image/x-icon" href="https://i.imgur.com/62s95F1.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.3/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
+	      <!-- Include Simple Notify JavaScript and CSS -->
+    <script src="https://thecursedgroup.github.io/joke/dad/noty.js"></script>
+    <link href="https://thecursedgroup.github.io/joke/dad/noty.css" rel="stylesheet">
   </head>
   <body>
 
@@ -50,5 +53,22 @@
     
     <script src="https://unpkg.com/@popperjs/core@2.10.1/dist/esm/popper.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.3/js/bootstrap.min.js"></script>
+	  <script>
+		    new Notify ({
+    status: 'success',
+    title: 'TheCursedGroup',
+    text: 'Welcome To Our Joke Generator.',
+    effect: 'slide',
+    speed: 300,
+    showIcon: false,
+    showCloseButton: false,
+    autoclose: true,
+    autotimeout: 3000,
+    gap: 20,
+    distance: 20,
+    type: 2,
+    position: 'right top'
+  })
+	  </script>
   </body>
 </html>
