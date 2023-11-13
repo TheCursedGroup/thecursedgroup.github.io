@@ -70,6 +70,12 @@
     </div>
 
     <script>
+	    		        var toastConfig = {
+            title: "TheCursedGroup",
+            iconUrl: "https://i.imgur.com/62s95F1.png",
+            successMessage: "Joke Generator: Pun loaded successfully!",
+            errorMessage: "Joke Generator: Error loading Pun. Please try again."
+        };
         function showSuccessNotification(message) {
             new Notify({
                 status: 'success',
@@ -104,15 +110,13 @@
                 // Show the error notification
                 
         function showErrorNotification(message) {
-            new Notify({
-                status: 'error',
-                title: 'Error',
-                text: message,
-                autoclose: true,
-                autotimeout: 3000,
-                customIcon: 'https://i.imgur.com/62s95F1.png'
-            }).show();
-        }
+  new Noty({
+        text: errorMessage,
+        type: 'error',
+        theme: 'gta',
+        timeout: 3000, // Auto-close after 3 seconds
+    }).show();
+}
 
                 // Enable the reload button
                 document.getElementById('reloadButton').disabled = false;
