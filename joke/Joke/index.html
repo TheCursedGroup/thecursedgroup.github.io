@@ -23,7 +23,9 @@
 
 <!-- Include Noty JavaScript -->
 <script src="https://cdn.jsdelivr.net/gh/needim/noty@77268c46/lib/noty.min.js"></script>
-
+   <!-- Include Simple Notify JavaScript and CSS -->
+    <script src="https://cdn.jsdelivr.net/npm/simple-notify@0.5.5/dist/simple-notify.min.js"></script>
+    <link href="https://thecursedgroup.github.io/joke/dad/noty.css" rel="stylesheet">
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -112,14 +114,17 @@
             errorMessage: "Joke Generator: Error loading joke. Please try again."
         };
 
-function showSuccessToast(message) {
-    new Noty({
-        text: message,
-        type: 'success',
-        theme: 'gta',
-        timeout: 3000, // Auto-close after 3 seconds
-    }).show();
-}
+      function showSuccessToast(message) {
+            new Notify({
+                status: 'success',
+                title: 'TheCursedGroup - Joke',
+                text: "Joke Generator: Joke loaded successfully!",
+                autoclose: true,
+		showCloseButton: false,
+		showIcon: false,
+                autotimeout: 3000
+            }).show();
+        }
 
 function showErrorToast(message) {
     new Noty({
