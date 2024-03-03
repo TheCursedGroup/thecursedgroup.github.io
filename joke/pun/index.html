@@ -137,7 +137,7 @@
             .then(response => response.json())
             .then(data => {
                 // Update the joke content
-                document.getElementById('joke-container').textContent = data.setup+""+data.punchline;
+                document.getElementById('joke-container').textContent = data.setup+" "+data.punchline;
 
                 // Show the success notification
                 showSuccessNotification("Joke loaded successfully");
